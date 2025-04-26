@@ -51,3 +51,17 @@ Map<String, dynamic> _$ProfileToJson(Profile instance) => <String, dynamic>{
   'is_verified_landlord': instance.isVerifiedLandlord,
   'updated_at': instance.updatedAt?.toIso8601String(),
 };
+
+CounterPartProfile _$CounterPartProfileFromJson(Map<String, dynamic> json) =>
+    CounterPartProfile(
+      phoneNumber: json['phone_number'] as String?,
+      address: json['address'] as String?,
+      role: UserRole.fromApiKey(json['role'] as String),
+    );
+
+Map<String, dynamic> _$CounterPartProfileToJson(CounterPartProfile instance) =>
+    <String, dynamic>{
+      'phone_number': instance.phoneNumber,
+      'address': instance.address,
+      'role': UserRole.toApiKey(instance.role),
+    };

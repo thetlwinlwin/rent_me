@@ -64,3 +64,19 @@ class Profile {
 
   Map<String, dynamic> toJson() => _$ProfileToJson(this);
 }
+
+@JsonSerializable()
+class CounterPartProfile {
+  @JsonKey(name: 'phone_number')
+  final String? phoneNumber;
+  final String? address;
+  @JsonKey(fromJson: UserRole.fromApiKey, toJson: UserRole.toApiKey)
+  final UserRole role;
+
+  CounterPartProfile({this.phoneNumber, this.address, required this.role});
+
+  factory CounterPartProfile.fromJson(Map<String, dynamic> json) =>
+      _$CounterPartProfileFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CounterPartProfileToJson(this);
+}

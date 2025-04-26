@@ -33,3 +33,24 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
   'is_active': instance.isActive,
   'date_joined': instance.dateJoined?.toIso8601String(),
 };
+
+CounterPartUser _$CounterPartUserFromJson(Map<String, dynamic> json) =>
+    CounterPartUser(
+      username: json['username'] as String,
+      firstName: json['first_name'] as String?,
+      lastName: json['last_name'] as String?,
+      profile:
+          json['profile'] == null
+              ? null
+              : CounterPartProfile.fromJson(
+                json['profile'] as Map<String, dynamic>,
+              ),
+    );
+
+Map<String, dynamic> _$CounterPartUserToJson(CounterPartUser instance) =>
+    <String, dynamic>{
+      'username': instance.username,
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
+      'profile': instance.profile?.toJson(),
+    };

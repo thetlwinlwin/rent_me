@@ -24,6 +24,7 @@ final leaseOfferProvider = FutureProvider.family
 class LeaseDetailNotifier extends FamilyAsyncNotifier<Lease, String> {
   @override
   Future<Lease> build(String arg) {
+    ref.watch(authNotifierProvider);
     return _fetchLeaseDetails(arg);
   }
 

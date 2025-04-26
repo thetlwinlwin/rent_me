@@ -10,8 +10,8 @@ class Lease {
 
   @JsonKey(name: 'property_details')
   final LeasePropertyDetails? propertyDetails;
-  @JsonKey(name: 'tenant_details')
-  final User? tenantDetails;
+  @JsonKey(name: 'counterparty_details')
+  final CounterPartUser? counterpartyDetails;
 
   @JsonKey(name: 'start_date', fromJson: _parseDate, toJson: _dateToString)
   final DateTime startDate;
@@ -48,7 +48,7 @@ class Lease {
   Lease({
     required this.id,
     this.propertyDetails,
-    this.tenantDetails,
+    this.counterpartyDetails,
     required this.startDate,
     required this.endDate,
     required this.status,

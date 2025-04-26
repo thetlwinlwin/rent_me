@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rent_me/core/constants/app_constants.dart';
 import 'package:rent_me/features/leases/presentation/providers/lease_provider.dart';
+import 'package:rent_me/shared/enums.dart';
 import 'package:rent_me/shared/providers/is_landlord.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -31,24 +32,16 @@ class LeaseDetailScreen extends ConsumerWidget {
                   const SizedBox(height: 8),
                   Text(lease.propertyDetails?.address ?? 'No address'),
                   const SizedBox(height: 16),
-                  ListTile(
-                    title: const Text('Tenant'),
-                    subtitle: Text(
-                      '${lease.tenantDetails?.firstName ?? ''} ${lease.tenantDetails?.lastName ?? ''}',
-                    ),
-                    trailing:
-                        lease.tenantDetails?.profile?.phoneNumber != null
-                            ? IconButton.outlined(
-                              onPressed: () async {
-                                final phone =
-                                    lease.tenantDetails?.profile?.phoneNumber;
-                                await launchUrl(
-                                  Uri(scheme: 'tel', path: phone),
-                                );
-                              },
-                              icon: Icon(Icons.call),
-                            )
-                            : null,
+                  _getTile(
+                    context: context,
+                    isCounterpartyLandlord:
+                        lease.counterpartyDetails?.profile?.role ==
+                        UserRole.landlord,
+                    firstName: lease.counterpartyDetails?.firstName,
+                    lastName: lease.counterpartyDetails?.lastName,
+                    address: lease.counterpartyDetails?.profile?.address,
+                    phoneNumber:
+                        lease.counterpartyDetails?.profile?.phoneNumber,
                   ),
                   const Divider(),
                   ListTile(
@@ -131,6 +124,40 @@ class LeaseDetailScreen extends ConsumerWidget {
               ),
             ),
           ),
+    );
+  }
+
+  ListTile _getTile({
+    required BuildContext context,
+    required bool isCounterpartyLandlord,
+    required String? firstName,
+    required String? lastName,
+    required String? phoneNumber,
+    required String? address,
+  }) {
+    return ListTile(
+      title: Text(isCounterpartyLandlord ? 'Landlord' : 'Tenant'),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 5),
+          Text('${firstName ?? ''} ${lastName ?? ''}'),
+          Text(
+            address ?? 'No Address',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
+      ),
+      trailing:
+          phoneNumber != null
+              ? IconButton.outlined(
+                onPressed: () async {
+                  final phone = phoneNumber;
+                  await launchUrl(Uri(scheme: 'tel', path: phone));
+                },
+                icon: Icon(Icons.call),
+              )
+              : null,
     );
   }
 }

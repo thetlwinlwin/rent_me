@@ -71,7 +71,7 @@ class LeaseItemCard extends ConsumerWidget {
                     const SizedBox(height: 6),
                     if (isLandLord)
                       Text(
-                        'Tenant: ${lease.tenantDetails?.username ?? 'N/A'}',
+                        'Tenant: ${lease.counterpartyDetails?.username ?? 'N/A'}',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                   ],

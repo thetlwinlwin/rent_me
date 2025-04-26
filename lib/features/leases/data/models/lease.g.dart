@@ -14,10 +14,12 @@ Lease _$LeaseFromJson(Map<String, dynamic> json) => Lease(
           : LeasePropertyDetails.fromJson(
             json['property_details'] as Map<String, dynamic>,
           ),
-  tenantDetails:
-      json['tenant_details'] == null
+  counterpartyDetails:
+      json['counterparty_details'] == null
           ? null
-          : User.fromJson(json['tenant_details'] as Map<String, dynamic>),
+          : CounterPartUser.fromJson(
+            json['counterparty_details'] as Map<String, dynamic>,
+          ),
   startDate: Lease._parseDate(json['start_date'] as String),
   endDate: Lease._parseDate(json['end_date'] as String),
   status: json['status'] as String,
@@ -35,7 +37,7 @@ Lease _$LeaseFromJson(Map<String, dynamic> json) => Lease(
 Map<String, dynamic> _$LeaseToJson(Lease instance) => <String, dynamic>{
   'id': instance.id,
   'property_details': instance.propertyDetails?.toJson(),
-  'tenant_details': instance.tenantDetails?.toJson(),
+  'counterparty_details': instance.counterpartyDetails?.toJson(),
   'start_date': Lease._dateToString(instance.startDate),
   'end_date': Lease._dateToString(instance.endDate),
   'status': instance.status,

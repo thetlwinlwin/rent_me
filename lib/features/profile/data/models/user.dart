@@ -33,3 +33,25 @@ class User {
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
 }
+
+@JsonSerializable(explicitToJson: true)
+class CounterPartUser {
+  final String username;
+  @JsonKey(name: 'first_name')
+  final String? firstName;
+  @JsonKey(name: 'last_name')
+  final String? lastName;
+  final CounterPartProfile? profile;
+
+  CounterPartUser({
+    required this.username,
+    this.firstName,
+    this.lastName,
+    this.profile,
+  });
+
+  factory CounterPartUser.fromJson(Map<String, dynamic> json) =>
+      _$CounterPartUserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CounterPartUserToJson(this);
+}
