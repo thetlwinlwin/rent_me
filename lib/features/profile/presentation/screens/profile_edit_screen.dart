@@ -83,7 +83,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                   onPressed: () async {
                     _pickImage();
                   },
-                  child: const Text("Pick An Image"),
+                  child: const Text("Upload Picture"),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
