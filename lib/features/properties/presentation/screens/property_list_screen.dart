@@ -7,6 +7,7 @@ import 'package:rent_me/features/properties/data/models/property.dart';
 import 'package:rent_me/features/properties/data/models/property_filter.dart';
 import 'package:rent_me/features/properties/presentation/providers/property_provider.dart';
 import 'package:rent_me/shared/providers/is_landlord.dart';
+import 'package:rent_me/shared/widgets/extensions_methods.dart';
 
 class PropertyListScreen extends ConsumerStatefulWidget {
   const PropertyListScreen({super.key});
@@ -127,9 +128,8 @@ class _PropertyListScreenState extends ConsumerState<PropertyListScreen> {
                         property: property,
                         onTap: () {
                           context.go(
-                            AppConstants.propertyDetailsRoute.replaceAll(
-                              '{id}',
-                              property.id.toString(),
+                            AppConstants.propertyDetailsRoute.swapId(
+                              id: property.id.toString(),
                             ),
                           );
                         },

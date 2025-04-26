@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rent_me/core/constants/constants.dart';
 import 'package:rent_me/core/network/dio_client.dart';
 import 'package:rent_me/features/leases/data/models/lease.dart';
+import 'package:rent_me/shared/widgets/extensions_methods.dart';
 
 class LeaseRepository {
   final Dio _dio;
@@ -36,7 +37,7 @@ class LeaseRepository {
   Future<Lease> fetchLeaseDetail(String leaseId) async {
     try {
       final response = await _dio.get(
-        APIConstants.leaseDetail.replaceAll('{id}', leaseId),
+        APIConstants.leaseDetail.swapId(id: leaseId),
       );
 
       if (response.statusCode == 200) {
@@ -82,7 +83,7 @@ class LeaseRepository {
   Future<Lease> approveLease(String leaseId) async {
     try {
       final response = await _dio.post(
-        APIConstants.leaseApprove.replaceAll('{id}', leaseId),
+        APIConstants.leaseApprove.swapId(id: leaseId),
       );
 
       if (response.statusCode == 200) {
@@ -104,7 +105,7 @@ class LeaseRepository {
   Future<Lease> rejectLease(String leaseId) async {
     try {
       final response = await _dio.post(
-        APIConstants.leaseReject.replaceAll('{id}', leaseId),
+        APIConstants.leaseReject.swapId(id: leaseId),
       );
 
       if (response.statusCode == 200) {

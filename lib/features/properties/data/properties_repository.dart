@@ -7,6 +7,7 @@ import 'package:rent_me/core/constants/api_constants.dart';
 import 'package:rent_me/core/network/dio_client.dart';
 import 'package:rent_me/features/properties/data/models/property.dart';
 import 'package:rent_me/features/properties/data/models/property_filter.dart';
+import 'package:rent_me/shared/widgets/extensions_methods.dart';
 
 class PropertyRepository {
   final Dio _dio;
@@ -129,10 +130,7 @@ class PropertyRepository {
           final imgData = FormData.fromMap({'images': imageFiles});
 
           final uploadImgs = await _dio.post(
-            APIConstants.propertyImagesBase.replaceAll(
-              '{id}',
-              property.id.toString(),
-            ),
+            APIConstants.propertyImagesBase.swapId(id: property.id.toString()),
             data: imgData,
           );
           if (uploadImgs.statusCode != 201) {

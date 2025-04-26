@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:rent_me/core/constants/app_constants.dart';
 import 'package:rent_me/features/properties/data/models/property.dart';
 import 'package:rent_me/features/properties/presentation/providers/property_provider.dart';
+import 'package:rent_me/shared/widgets/extensions_methods.dart';
 
 class PropertyAddScreen extends ConsumerStatefulWidget {
   const PropertyAddScreen({super.key});
@@ -93,9 +94,8 @@ class _PropertyAddScreenState extends ConsumerState<PropertyAddScreen> {
             if (mounted) {
               ref.invalidate(propertiesProvider);
               context.go(
-                AppConstants.propertyDetailsRoute.replaceAll(
-                  '{id}',
-                  data.id.toString(),
+                AppConstants.propertyDetailsRoute.swapId(
+                  id: data.id.toString(),
                 ),
               );
             }

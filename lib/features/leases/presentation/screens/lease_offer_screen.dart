@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:rent_me/core/constants/app_constants.dart';
 import 'package:rent_me/features/leases/data/models/lease.dart';
 import 'package:rent_me/features/leases/presentation/providers/lease_provider.dart';
+import 'package:rent_me/shared/widgets/extensions_methods.dart';
 
 class LeaseOfferScreen extends ConsumerStatefulWidget {
   final String propertyId;
@@ -67,10 +68,7 @@ class _LeaseOfferScreenState extends ConsumerState<LeaseOfferScreen> {
         Future.delayed(const Duration(seconds: 1), () {
           if (mounted) {
             context.go(
-              AppConstants.leaseDetailRoute.replaceAll(
-                '{id}',
-                result.id.toString(),
-              ),
+              AppConstants.leaseDetailRoute.swapId(id: result.id.toString()),
             );
           }
         });

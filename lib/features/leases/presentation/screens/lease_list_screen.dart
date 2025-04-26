@@ -5,6 +5,7 @@ import 'package:rent_me/core/constants/constants.dart';
 import 'package:rent_me/features/leases/data/models/lease.dart';
 import 'package:rent_me/features/leases/presentation/providers/lease_provider.dart';
 import 'package:rent_me/features/leases/presentation/widgets/lease_item_card.dart';
+import 'package:rent_me/shared/widgets/extensions_methods.dart';
 
 class LeaseListScreen extends ConsumerWidget {
   const LeaseListScreen({super.key});
@@ -115,9 +116,8 @@ class LeaseListScreen extends ConsumerWidget {
                             lease: lease,
                             onTap: () {
                               context.go(
-                                AppConstants.leaseDetailRoute.replaceAll(
-                                  '{id}',
-                                  lease.id.toString(),
+                                AppConstants.leaseDetailRoute.swapId(
+                                  id: lease.id.toString(),
                                 ),
                               );
                             },

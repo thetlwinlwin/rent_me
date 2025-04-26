@@ -8,6 +8,7 @@ import 'package:rent_me/features/properties/data/models/property.dart';
 import 'package:rent_me/features/properties/presentation/providers/property_provider.dart';
 import 'package:rent_me/shared/enums.dart';
 import 'package:rent_me/shared/providers/is_landlord.dart';
+import 'package:rent_me/shared/widgets/extensions_methods.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PropertyDetailScreen extends ConsumerStatefulWidget {
@@ -189,9 +190,8 @@ class _PropertyDetailScreenState extends ConsumerState<PropertyDetailScreen> {
               property.availabilityStatus == AvailabilityStatus.available)
             ElevatedButton(
               onPressed: () {
-                final location = AppConstants.propertyOfferRoute.replaceAll(
-                  '{id}',
-                  property.id.toString(),
+                final location = AppConstants.propertyOfferRoute.swapId(
+                  id: property.id.toString(),
                 );
                 context.go(location);
               },
