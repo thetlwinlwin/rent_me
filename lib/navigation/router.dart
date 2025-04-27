@@ -19,6 +19,7 @@ import 'package:rent_me/features/properties/presentation/screens/property_detail
 import 'package:rent_me/features/properties/presentation/screens/property_list_screen.dart';
 import 'package:rent_me/features/profile/presentation/screens/profile_screen.dart';
 import 'package:rent_me/shared/widgets/main_shell.dart';
+import 'package:rent_me/shared/widgets/route_guard.dart';
 import 'package:rent_me/shared/widgets/splash_screen.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -34,10 +35,16 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       final authStatus = ref.read(authNotifierProvider).status;
       final location = state.matchedLocation;
 
+      final isLoggedIn = authStatus == AuthStatus.authenticated;
+      final isGuest = authStatus == AuthStatus.guest;
+
+      final isSplashRoute = location == AppConstants.splashRoute;
+      final isAuthRoute =
+          location == AppConstants.loginRoute ||
+          location == AppConstants.registerRoute;
+
       if (authStatus == AuthStatus.unknown) {
-        return location == AppConstants.splashRoute
-            ? null
-            : AppConstants.splashRoute;
+        return isSplashRoute ? null : AppConstants.splashRoute;
       }
 
       if (authStatus == AuthStatus.pending) {
@@ -46,26 +53,13 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             : AppConstants.verifyRoute;
       }
 
-      final loggedIn = authStatus == AuthStatus.authenticated;
-      final isAuthRoute =
-          location == AppConstants.loginRoute ||
-          location == AppConstants.registerRoute;
-      final isSplash = location == AppConstants.splashRoute;
-
-      if (loggedIn) {
-        if (isSplash || isAuthRoute) {
-          return AppConstants.propertiesRoute;
-        }
-        return null;
+      if ((isLoggedIn || isGuest) && (isSplashRoute || isAuthRoute)) {
+        return AppConstants.propertiesRoute;
       }
 
-      if (!loggedIn) {
-        if (isSplash || !isAuthRoute) {
-          return AppConstants.loginRoute;
-        }
-        return null;
+      if (!isLoggedIn && !isGuest) {
+        return !isAuthRoute ? AppConstants.loginRoute : null;
       }
-
       return null;
     },
 
@@ -91,7 +85,6 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         navigatorKey: shellNavigatorKey,
         builder: (context, state, child) => MainShell(child: child),
         routes: <RouteBase>[
-          //Tab 0
           GoRoute(
             path: AppConstants.propertiesRoute,
             pageBuilder:
@@ -126,12 +119,13 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               ),
             ],
           ),
-          //Tab 1
+
           GoRoute(
             path: AppConstants.leasesRoute,
             pageBuilder:
-                (context, state) =>
-                    const NoTransitionPage(child: LeaseListScreen()),
+                (context, state) => const NoTransitionPage(
+                  child: RouteGuard(child: LeaseListScreen()),
+                ),
             routes: <RouteBase>[
               GoRoute(
                 path: ':id',
@@ -145,8 +139,9 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: AppConstants.profileRoute,
             pageBuilder:
-                (context, state) =>
-                    const NoTransitionPage(child: ProfileScreen()),
+                (context, state) => const NoTransitionPage(
+                  child: RouteGuard(child: ProfileScreen()),
+                ),
             routes: <RouteBase>[
               GoRoute(
                 path: 'edit',

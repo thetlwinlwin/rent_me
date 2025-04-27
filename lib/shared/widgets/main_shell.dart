@@ -33,7 +33,6 @@ class MainShell extends ConsumerWidget {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: navigateToTab,
-
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.explore_outlined),

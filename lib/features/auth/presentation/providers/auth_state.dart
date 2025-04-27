@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' show immutable;
 import 'package:rent_me/features/profile/data/models/user.dart';
 
-enum AuthStatus { unknown, authenticated, unauthenticated, pending }
+enum AuthStatus { unknown, authenticated, unauthenticated, pending, guest }
 
 @immutable
 class AuthState {
@@ -13,6 +13,16 @@ class AuthState {
 
   const AuthState.unknown()
     : status = AuthStatus.unknown,
+      user = null,
+      token = null;
+
+  const AuthState.guest()
+    : status = AuthStatus.guest,
+      user = null,
+      token = null;
+
+  const AuthState.unauthenticated()
+    : status = AuthStatus.unauthenticated,
       user = null,
       token = null;
 

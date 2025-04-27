@@ -9,6 +9,7 @@ import 'package:rent_me/features/properties/presentation/providers/property_prov
 import 'package:rent_me/shared/enums.dart';
 import 'package:rent_me/shared/providers/is_landlord.dart';
 import 'package:rent_me/shared/widgets/extensions_methods.dart';
+import 'package:rent_me/shared/widgets/protected_btn.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PropertyDetailScreen extends ConsumerStatefulWidget {
@@ -188,7 +189,7 @@ class _PropertyDetailScreenState extends ConsumerState<PropertyDetailScreen> {
           const SizedBox(height: 20),
           if (!isLandLord &&
               property.availabilityStatus == AvailabilityStatus.available)
-            ElevatedButton(
+            ProtectedButton(
               onPressed: () {
                 final location = AppConstants.propertyOfferRoute.swapId(
                   id: property.id.toString(),

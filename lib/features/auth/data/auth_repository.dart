@@ -67,6 +67,8 @@ class AuthRepository {
   Future<void> logout() async {
     await _secureStorage.delete(key: AppConstants.authTokenKey);
     await _secureStorage.delete(key: AppConstants.emailStatus);
+    await _secureStorage.delete(key: AppConstants.themeModeKey);
+
     try {
       await _dio.post(APIConstants.logout);
     } catch (e) {

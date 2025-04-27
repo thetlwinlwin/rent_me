@@ -29,22 +29,23 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
             token: token,
           );
         } catch (e) {
-          await logout();
+          await _secureStorage.delete(key: AppConstants.authTokenKey);
+          state = const AuthState.unauthenticated();
         }
       } else if (emailStatus != null) {
         state = const AuthState(status: AuthStatus.pending);
       } else {
-        state = const AuthState(status: AuthStatus.unauthenticated);
+        state = const AuthState.unauthenticated();
       }
     } catch (e) {
-      state = const AuthState(status: AuthStatus.unauthenticated);
+      state = const AuthState.unauthenticated();
     }
   }
 
   Future<void> verify(String key) async {
     try {
       await _authRepository.verifyEmail(key: key);
-      state = AuthState(status: AuthStatus.unauthenticated);
+      state = AuthState.unauthenticated();
     } catch (e) {
       rethrow;
     }
@@ -70,13 +71,17 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  Future<void> guestLogin() async {
+    state = AuthState.guest();
+  }
+
   Future<void> logout() async {
     try {
       await _authRepository.logout();
     } catch (e) {
       rethrow;
     } finally {
-      state = const AuthState(status: AuthStatus.unauthenticated);
+      state = const AuthState.unauthenticated();
     }
   }
 
@@ -112,8 +117,3 @@ final authNotifierProvider =
       final secureStorage = ref.watch(secureStorageProvider);
       return AuthStateNotifier(authRepository, secureStorage);
     });
-
-final authStatusProvider = Provider.autoDispose<AuthStatus>((ref) {
-  final authState = ref.watch(authNotifierProvider);
-  return authState.status;
-});

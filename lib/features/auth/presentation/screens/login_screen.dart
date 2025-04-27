@@ -123,6 +123,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           },
                   child: const Text('Don\'t have an account? Register'),
                 ),
+                TextButton(
+                  onPressed:
+                      _isLoading
+                          ? null
+                          : () {
+                            ref
+                                .read(authNotifierProvider.notifier)
+                                .guestLogin();
+                          },
+                  child: Text(
+                    'continue without register',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
               ],
             ),
           ),
