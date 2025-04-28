@@ -52,9 +52,8 @@ class DioClient {
             if (authStatus == AuthStatus.authenticated) {
               try {
                 await _ref.read(authNotifierProvider.notifier).logout();
-                print('[DioClient] Auto-logged out due to 401 Unauthorized.');
               } catch (e) {
-                print('[DioClient] Error during auto-logout: $e');
+                rethrow;
               }
             }
           }

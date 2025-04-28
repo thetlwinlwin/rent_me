@@ -29,7 +29,6 @@ class LeaseRepository {
     } on DioException {
       throw Exception('Network error fetching leases. Please try again.');
     } catch (e) {
-      print(e);
       throw Exception('An unexpected error occurred while fetching leases.');
     }
   }
@@ -56,7 +55,6 @@ class LeaseRepository {
     }
   }
 
-  // --- TODO: Add other methods as needed ---
   Future<Lease> leaseOffer(CreateLease leaseDetails) async {
     try {
       final response = await _dio.post(

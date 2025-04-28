@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rent_me/core/constants/constants.dart';
 
 final lightTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
@@ -7,12 +8,23 @@ final lightTheme = ThemeData(
   ),
   useMaterial3: true,
   brightness: Brightness.light,
+  textButtonTheme: TextButtonThemeData(
+    style: TextButton.styleFrom(
+      foregroundColor: Colors.indigo,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+      textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppConstants.defaultBorderRadius),
+      ),
+    ),
+  ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: Colors.indigo,
       foregroundColor: Colors.white,
-      disabledBackgroundColor: Colors.indigo.shade100,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppConstants.defaultBorderRadius),
+      ),
       elevation: 3,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
@@ -32,8 +44,9 @@ final darkTheme = ThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: Colors.indigo.shade300,
       foregroundColor: Colors.black,
-      disabledBackgroundColor: Colors.indigo.shade800,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppConstants.defaultBorderRadius),
+      ),
       elevation: 3,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),

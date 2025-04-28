@@ -78,11 +78,7 @@ class AuthRepository {
 
   Future<void> verifyEmail({required String key}) async {
     try {
-      final response = await _dio.post(
-        APIConstants.verifyEmail,
-        data: {'key': key},
-      );
-      print('response is $response');
+      await _dio.post(APIConstants.verifyEmail, data: {'key': key});
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
         throw AuthException(
@@ -137,7 +133,6 @@ class AuthRepository {
     } on DioException catch (e) {
       if (e.response?.statusCode == 400) {
         final errors = e.response?.data;
-        print('errors is $errors');
         if (errors is Map) {
           List<String> messages = [];
           errors.forEach((field, value) {

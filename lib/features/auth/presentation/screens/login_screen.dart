@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart'; // For navigation after login
 import 'package:rent_me/core/constants/constants.dart'; // For route paths
 import 'package:rent_me/features/auth/presentation/providers/auth_provider.dart';
+import 'package:rent_me/shared/widgets/custom_text_btn.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -114,17 +115,26 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           : const Text('Login'),
                 ),
                 const SizedBox(height: 20),
-                TextButton(
-                  onPressed:
+                CustomTextBtn(
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                    fontSize: 14,
+                    decoration: TextDecoration.underline,
+                  ),
+                  onTap:
                       _isLoading
                           ? null
                           : () {
                             context.push(AppConstants.registerRoute);
                           },
-                  child: const Text('Don\'t have an account? Register'),
+                  onPressColor: Colors.indigo.shade400,
+                  text: 'Don\'t have an account? Register',
                 ),
-                TextButton(
-                  onPressed:
+                CustomTextBtn(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: Colors.grey.shade500,
+                    decoration: TextDecoration.underline,
+                  ),
+                  onTap:
                       _isLoading
                           ? null
                           : () {
@@ -132,10 +142,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 .read(authNotifierProvider.notifier)
                                 .guestLogin();
                           },
-                  child: Text(
-                    'continue without register',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                  onPressColor: Colors.indigo.shade400,
+                  text: 'Continue without register',
                 ),
               ],
             ),
